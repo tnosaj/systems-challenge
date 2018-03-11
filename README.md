@@ -122,8 +122,29 @@ errors.
 - Identify the SPOFs in the result of the assignment and explain how you would
   solve them.
 ```
-  
+**everything running on a single instance** - even *my* laptop will fail. Run this
+setup in a production ready data center/cloud.
 
+**consul** - consul should only be run in a single node manner in a development setup. 
+For a production setup, consul needs to find quorum. This means spinning up 3 or 5 
+nodes which will participate in the Raft quorum and having the client agents 
+connect to all of them.
+
+**haproxy** - instead of using a single haproxy, use multiple ones. Depending
+on the setup, there are multiple ways of ensuring traffic is not only going to one:
+- dns round robin (will not stop but only mitigate failure)
+- floating IP with e.g. corosync moving it away from a node that fails
+- using a cloud providers load balancing to split the traffic and recognize node failures. 
+(essentially moving the problem to someone else's doorstep)
+
+**single-datacenter** - With a simple app as in this case, it is easy to spin up instances
+in a different data center and use some dns magic (e.g. dyn's geo dns) to ensure that
+regions will be served from the nearest operational data center.
+
+While this is a rough overview of failure scenarios, other aspects are just as important:
+- review configurations (especially consul reconnect settings)
+- centralizing logging
+- monitor-all-the-things
   
 ```
 - Explain how would you upgrade the Cabify service without downtime. We
