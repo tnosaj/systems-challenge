@@ -1,0 +1,58 @@
+version: "3"
+
+services:
+  consul:
+    image: progrium/consul
+    container_name: consul
+    expose:
+      - "8400"
+      - "8500"
+    ports:
+      - "8500:8500"
+      - "8600:53/udp"
+    restart: always
+    command: -bind 0.0.0.0 -server -bootstrap -ui-dir /ui -dc cabify -encrypt WNFe5zIjCIHFeJnqtrfdgw==
+  web1:
+    dns: 192.168.99.1
+    build: ./cabify-app
+    image: cabify-app
+    container_name: web1
+    expose:
+      - "8181"
+    environment:
+      - CONSUL_IP=consul
+      - CONSUL_PORT=8500
+      - APP_NAME=cabify
+      - APP_PORT=8181
+    restart: always
+    depends_on:
+      - consul
+  web2:
+    dns: 192.168.99.1
+    build: ./cabify-app
+    image: cabify-app
+    container_name: web2
+    expose:
+      - "8182"
+    environment:
+      - CONSUL_IP=consul
+      - CONSUL_PORT=8500
+      - APP_NAME=cabify
+      - APP_PORT=8182
+    restart: always
+    depends_on:
+      - consul
+  haproxy:
+    dns: 192.168.99.1
+    build: ./haproxy
+    image: cabify-haproxy
+    container_name: haproxy
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    depends_on:
+      - consul
+
+networks:
+  default:
+
