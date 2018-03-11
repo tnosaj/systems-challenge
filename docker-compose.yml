@@ -13,7 +13,6 @@ services:
     restart: always
     command: -bind 0.0.0.0 -server -bootstrap -ui-dir /ui -dc cabify -encrypt WNFe5zIjCIHFeJnqtrfdgw==
   web1:
-    dns: 192.168.99.1
     build: ./cabify-app
     image: cabify-app
     container_name: web1
@@ -28,7 +27,6 @@ services:
     depends_on:
       - consul
   web2:
-    dns: 192.168.99.1
     build: ./cabify-app
     image: cabify-app
     container_name: web2
@@ -43,7 +41,6 @@ services:
     depends_on:
       - consul
   haproxy:
-    dns: 192.168.99.1
     build: ./haproxy
     image: cabify-haproxy
     container_name: haproxy
@@ -52,6 +49,14 @@ services:
       - "8081:8081"
     depends_on:
       - consul
+      - web1
+      - web2
+  test:
+    build: ./test
+    image: cabify-tester
+    container_name: test
+    depends_on:
+      - haproxy
 
 networks:
   default:
