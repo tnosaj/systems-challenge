@@ -22,6 +22,7 @@ As I understood this exercise the `cabify` service consists of all three parts:
 - application
 - haproxy
 - consul
+
 Thus, deploying a new service has no dependencies on existing infrastructure. 
 This was my past experience. However, after re-reading the description (again) 
 it seems that only the `application` layer is the service. As a result, the 
@@ -30,7 +31,9 @@ I can gladly create a simplified example which only uses ansible roles to deploy
 docker, configure the consul/haproxy to play with a dockerized application 
 container running in the vagrant box.
 
-Running the assignment:
+### Initialization
+
+To run the assignment:
 ```
 git clone https://github.com/tnosaj/systems-challenge.git
 cd system-challenge
@@ -42,7 +45,7 @@ This will deploy:
 - 2x cabify-app containers - self registration done via `python-consul`
 - 1x test container - runs simple python assertion tests
 
-### Consul
+#### Consul
 Consul exposes its HTTP api on port `8500`:
 ```
 ~:  curl -s http://localhost:8500/v1/agent/members|jq
@@ -72,7 +75,7 @@ Consul exposes its HTTP api on port `8500`:
 ]
 ```
 
-### Haproxy
+#### Haproxy
 Consul-template configures haproxy by querying the `cabify` consul service.
 
 The haproxy will answer on port `8080`:
@@ -99,7 +102,7 @@ cabify,172.18.0.4-8182,0,0,0,1,,1,143,880,,0,,0,0,0,0,UP,1,1,0,0,0,486,0,,1,3,2,
 cabify,BACKEND,0,0,0,1,1000,3,376,1226,0,0,,0,0,0,0,UP,2,2,0,,0,486,0,,1,3,0,,3,,1,0,,2,,,,0,2,0,1,0,0,,,,3,0,0,0,0,0,0,309,,,0,0,1,1,,,,,,,,,,,,,,http,roundrobin,,,,,,,
 ```
 
-### App
+#### App
 The app container does not expose any ports outside the docker-compose 
 application. The bottle app auto registers with consul on startup by 
 using [python-consul](https://python-consul.readthedocs.io/en/latest/).
@@ -116,8 +119,8 @@ app servers in consul until I was pointed at
 [this](https://github.com/hashicorp/consul/issues/1659#issuecomment-320854604)
 link.
 
-- For the auto-registration, I experimented with `registrator`, but opted 
-for the application to self register rather than adding an additional error 
+- For the auto-registration, I experimented with [registrator](https://github.com/gliderlabs/registrator), 
+but opted for the application to self register rather than adding an additional error 
 source.
 
 - Instead of using the `/status` as a check url, the haproxy uses the simple 
