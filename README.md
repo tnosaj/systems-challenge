@@ -17,6 +17,19 @@ the example above.
 This was my first experience with docker, so please be kind if I did not 
 follow best practices.
 
+**Please note**:
+As I understood this exercise the `cabify` service consists of all three parts:
+- application
+- haproxy
+- consul
+Thus, deploying a new service has no dependencies on existing infrastructure. 
+This was my past experience. However, after re-reading the description (again) 
+it seems that only the `application` layer is the service. As a result, the 
+dockerization of each part may have been over engineering. If this is the case, 
+I can gladly create a simplified example which only uses ansible roles to deploy 
+docker, configure the consul/haproxy to play with a dockerized application 
+container running in the vagrant box.
+
 Running the assignment:
 ```
 git clone https://github.com/tnosaj/systems-challenge.git
