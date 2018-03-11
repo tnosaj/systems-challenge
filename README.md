@@ -158,7 +158,7 @@ Assumptions which have to be made:
 - possible migrations will not break older applications.
 
 A simple solution for deployments would be to spin up a new container and let it register 
-in consul. In this exmple where consul-template is used to configure haproxy, it is possible 
+in consul. In this example where consul-template is used to configure haproxy, it is possible 
 to add logic to adjust the weight of a new container (quasi canary deployments). Thus, 
 a newly deployed container could be added with weight of 10 while the default weight is 
 100. If resources allow, it is possible to spin up a new fleet of containers with the 
@@ -168,7 +168,7 @@ are a problem, pulling a single container and replace it with a new one is a pos
 Having adequate logging/health checks is mandatory: only by ensuring the new containers 
 are healthy and fully functional can automated deployment happen with reliability. E.g. the 
 `/status` endpoint could be expanded to ensure that the database/queues are reachable or 
-that rudementary lookups work, making the consul check a first line of defense against 
+that rudimentary lookups work, making the consul check a first line of defense against 
 broken deploys. 
 
 Previously, we used Capistrano to deploy one of our apps. It rolled deploys as follows:
@@ -187,5 +187,10 @@ little effort to configure.
 In general, using an orchestration system with a builtin form of blue/green or canary 
 deployment would be a more strategic approach. E.g. Kubernetes has numerous 
 [use cases](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
-in their documentation describing possible scenarios, however most moder 
-orchestration platformst have some form of deployment ([OpenShift](https://docs.openshift.com/enterprise/3.0/dev_guide/deployments.html#strategies), [Mesos](https://mesosphere.com/blog/continuous-deployment-with-mesos-marathon-docker/), [Rancher](http://rancher.com/continuous-deployment/), [Spinnaker](https://www.spinnaker.io/concepts/)). The correct tool to use is (as is the case for any piece of software) about testing it out to determine if it will be easy or hard to adapt.
+in their documentation describing possible scenarios, however most modern
+orchestration platforms have some form of deployment (
+[OpenShift](https://docs.openshift.com/enterprise/3.0/dev_guide/deployments.html#strategies), 
+[Mesos](https://mesosphere.com/blog/continuous-deployment-with-mesos-marathon-docker/), 
+[Rancher](http://rancher.com/continuous-deployment/), [Spinnaker](https://www.spinnaker.io/concepts/)). 
+The correct tool to use is (as is the case for any piece of software) about testing 
+it out to determine if it will be easy or hard to adapt.
