@@ -204,8 +204,7 @@ In general, using an orchestration system with a builtin form of blue/green or c
 deployment would be a more strategic approach. E.g. Kubernetes has numerous 
 [use cases](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)
 in their documentation describing possible scenarios, however most modern
-orchestration platforms have some form of deployment (
-[OpenShift](https://docs.openshift.com/enterprise/3.0/dev_guide/deployments.html#strategies), 
+orchestration platforms have some form of deployment ([OpenShift](https://docs.openshift.com/enterprise/3.0/dev_guide/deployments.html#strategies), 
 [Mesos](https://mesosphere.com/blog/continuous-deployment-with-mesos-marathon-docker/), 
 [Rancher](http://rancher.com/continuous-deployment/), [Spinnaker](https://www.spinnaker.io/concepts/)). 
 The correct tool to use is (as is the case for any piece of software) about testing 
