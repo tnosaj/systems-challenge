@@ -110,9 +110,9 @@ using [python-consul](https://python-consul.readthedocs.io/en/latest/).
 
 ### Notes
 - Initially I was using consul's dns endpoint to resolve the IP of the 
-consul server. This worked well, however as I have dove into docker-compose 
-i realized that there is local resolution within a docker-compose 
-application scope.
+consul server. This worked well, however as I dove into docker-compose 
+i realized that there is [local resolution](https://docs.docker.com/compose/networking/)
+within a docker-compose application scope.
 
 - I spent quite a bit of time trying to find out how to register multiple 
 app servers in consul until I was pointed at 
